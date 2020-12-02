@@ -1,12 +1,14 @@
 import express , { Application } from "express";
 import { Server as SocketIOServer } from "socket.io";
 import { createServer, Server as HTTPServer } from "http";
+import User from "./User"
 
 export class Server {
     private httpServer: HTTPServer;
     private app: Application;
     private io: SocketIOServer;
     private activeSockets: string[] = [];
+    private activeUsers: User[] = [];
 
     private readonly DEFAULT_PORT = 5000;
 
@@ -34,9 +36,10 @@ export class Server {
                 this.activeSockets.push(socket.id);
             }
 
-            socket.broadcast.emit('update-user-list', {
-                users: [socket.id]
-            });
+            socket.on('add-user', (data:{userName: string, socketId: string}) =>{
+                this.activeUsers.push(new User(data.socketId, data.userName));
+                socket.broadcast.emit('update-user-list', this.activeUsers);
+            })
 
             socket.on('disconnect', () =>{
                 this.activeSockets = this.activeSockets.filter(
