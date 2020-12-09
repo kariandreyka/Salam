@@ -1,0 +1,110 @@
+.input_container{
+    display: block;
+    position: relative;
+    font-size: 18px;
+    color: #ffffff;
+    line-height: 24px;
+    width: 100%;
+    max-width: 300px;
+    height: 26px;
+    border-bottom: 1px solid #ffffff;
+
+    &.white{
+        color: #7F8C8D !important;
+        border-bottom: 2px solid #7F8C8D !important;
+
+        
+        &.input_active{
+            label{
+                color: #000000;
+            }
+            
+            color: #000000;
+            .line{
+                border-color: #000000 !important;
+            }
+        }
+    }
+
+    label{
+        position: absolute;
+        transition: all 0.3s ease-in-out;
+        
+    }
+    
+
+    input{
+        position: absolute;
+        border: none;
+        background-color: unset;
+        font-size: 18px;
+        color: #000000;
+        line-height: 24px;
+        width: 100%;
+    }
+
+    .line{
+        position: absolute;
+        z-index: 5;
+        bottom: -2px;
+        left: 50%;
+        width: 0px;
+        height: 0px;
+        transition: all 0s;
+    }
+
+    &.input_active{
+        label{
+            color: #ffffff;
+            font-size: 11px;
+            line-height: 15px;
+            transform: translate(0px, -15px);
+        }
+        .line{
+            transform: translate(-50%, 0px);
+            max-width: 100%;
+            width: 100%;
+            border: 1px solid #ffffff;
+            transition: position 0.5s ease-in-out, width 0.5s ease-in-out;
+        }
+    }
+
+}
+
+.form_button {
+	box-shadow:inset 0px 1px 23px -18px #efdcfb;
+	background:linear-gradient(to bottom, #9c59b6 5%, #8d44ad 100%);
+	background-color:#9c59b6;
+	border-radius:16px;
+	border:1px solid #ffffff;
+	display: block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 53px;
+	text-decoration:none;
+	text-shadow:0px 1px 12px #9752cc;
+}
+.form_button:hover {
+	background:linear-gradient(to bottom, #8d44ad 5%, #9c59b6 100%);
+	background-color:#8d44ad;
+}
+.form_button:active {
+	position:relative;
+	top:1px;
+}
+
+.form_container{
+    animation: drown .3s ease-in 1;
+}
+
+@keyframes drown{
+    from{
+        margin-top: -400px;
+    }
+    to{
+        margin-top: 3rem;
+    }
+}
