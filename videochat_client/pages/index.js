@@ -20,35 +20,35 @@ export default function Home() {
   }
 
   return (
-    <div>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <div>
+        <Head>
+          <title>Create Next App</title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
 
-      <Header/>
-      <main className="d-flex" ref={containerRef}>
-          <div 
-            id="join" 
-            className={`d-flex justify-content-center align-items-center ${styles.box} ${styles.purp}`} 
-            onClick={handleClick}
-          > 
-            <div className={styles.box_item}>
-              <Join width={200} height={160}/>
-              Join existing room
+        <Header/>
+        <main className="d-flex" ref={containerRef}>
+            <div 
+              id="join" 
+              className={`d-flex justify-content-center align-items-center ${styles.box} ${styles.purp}`} 
+              onClick={handleClick}
+            > 
+              <div className={styles.box_item}>
+                <Join width={200} height={160}/>
+                Join existing room
+              </div>
             </div>
-          </div>
-          <div 
-            id="create" 
-            className={`d-flex justify-content-center align-items-center ${styles.box}`} 
-            onClick={handleClick}
-          >
-            <div className={styles.box_item}>
-              <Create width={200} height={160}/>
-              Create new room
-            </div>        
-          </div>
-      </main>
-    </div>
+            <div 
+              id="create" 
+              className={`d-flex justify-content-center align-items-center ${styles.box}`} 
+              onClick={handleClick}
+            >
+              <div className={styles.box_item}>
+                <Create width={200} height={160}/>
+                Create new room
+              </div>        
+            </div>
+        </main>
+      </div>
   )
 }

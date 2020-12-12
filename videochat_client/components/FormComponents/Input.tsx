@@ -22,7 +22,11 @@ const Input = ({placeholder, className, onChange, style, defaultColor = false } 
     }
 
     return (
-        <div ref={inputRef} style={style? style : null} className={`${styles.input_container} ${defaultColor? styles.white: ''} ${className? className: ''}`}>
+        <div 
+            ref={inputRef}
+            style={style? style : null} 
+            className={`${styles.input_container} ${defaultColor? styles.white: ''} ${className? className: ''}`}
+        >
             <label htmlFor="input" className={styles.label}>{placeholder}</label>
             <input id="input" onFocus={handleClick} onChange={onChange} onBlur={handleBlur} type='text'/>
             <div className={styles.line}></div>

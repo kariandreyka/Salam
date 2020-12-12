@@ -1,5 +1,5 @@
 import express , { Application } from "express";
-import { Server as SocketIOServer } from "socket.io";
+import { Server as SocketIOServer, Socket } from "socket.io";
 import { createServer, Server as HTTPServer } from "http";
 import User from "./User"
 
@@ -7,15 +7,21 @@ export class Server {
     private httpServer: HTTPServer;
     private app: Application;
     private io: SocketIOServer;
-    private activeSockets: string[] = [];
-    private activeUsers: User[] = [];
+    //private activeSockets: string[] = [];
+    private rooms: Map<string, User[] | undefined>;
 
     private readonly DEFAULT_PORT = 5000;
 
     constructor() {
+        this.rooms = new Map();
         this.app = express();
         this.httpServer = createServer(this.app);
-        this.io = new SocketIOServer(this.httpServer);
+        this.io = new SocketIOServer(this.httpServer, {
+            cors: {
+              origin: "http://localhost:3000",
+              methods: ["GET", "POST"]
+            }
+        });
 
         this.handleRoutes();
         this.handleSocketConnection();
@@ -28,23 +34,57 @@ export class Server {
     }
 
     private handleSocketConnection(): void{
-        this.io.on('connection', socket =>{
-            const existingSocket = this.activeSockets.find(
-                existingSocket => existingSocket === socket.id
-            );
-            if(!existingSocket){
-                this.activeSockets.push(socket.id);
-            }
+        this.io.on('connection', (socket: Socket) =>{
+            console.log('connected ', socket.id, socket.request.headers.referer );
+            
+            socket.on('create-room', (name:string , cb: (roomId: string, err?: Error) => void) =>{
+                const roomId: string = Math.random().toString(16).slice(2, 7);
+                socket.join(roomId);
+                this.rooms.set(roomId, [new User(socket.id, name)]);
+                cb(roomId);
+                console.log(this.rooms);
+            })
 
-            socket.on('add-user', (data:{userName: string, socketId: string}) =>{
-                this.activeUsers.push(new User(data.socketId, data.userName));
-                socket.broadcast.emit('update-user-list', this.activeUsers);
+            socket.on('join-room', (data: {roomId: string, name: string}, cb:(res?: string, err?: string) => void) =>{
+                console.log(data.roomId);
+                if(!this.rooms.get(data.roomId)){
+                    cb(undefined, 'This room doesn\'t exist.'); 
+                    return;
+                }else{
+                    if(this.rooms.get(data.roomId)?.length === 2){
+                        const error = 'The room is full.';
+                        cb(undefined, error);
+                        return;
+                    }
+
+                    socket.join(data.roomId);
+                    let user;
+                    console.log(this.rooms.size);
+                    if(this.rooms.size != 0){
+                        const iterator = this.rooms.values();
+                        [user] = iterator.next().value;
+                        console.log(user);
+
+                    }
+                    this.rooms.get(data.roomId)?.push(new User(socket.id, data.name));
+                    socket.broadcast.to(data.roomId).emit('update-user-list', data.name, socket.id); 
+                    socket.emit('update-user-list', user.getUserName(), user.getUserId());
+                    console.log(this.rooms);
+                    cb(data.roomId);
+                }
             })
 
             socket.on('disconnect', () =>{
-                this.activeSockets = this.activeSockets.filter(
-                    existingSocket => existingSocket != socket.id
-                )
+                console.log('disconnect', socket.id);
+
+                for(const key of this.rooms.keys()){   
+                    this.rooms.set(key, this.rooms.get(key)?.filter(user =>{
+                        return user.getUserId() !== socket.id;
+                    }));
+                }
+
+                console.log(this.rooms);
+
                 socket.broadcast.emit('remove-user', {
                     socketId: socket.id
                 });
