@@ -1,0 +1,20 @@
+@startuml Start video call
+
+(*) --> if "Not empty"
+-right->[true] "Create offer"
+--> "Set local description"
+--> "Send offer"
+--> "Get answer"
+--> "Set remote description"
+--> ===B2===
+else
+-left->[false] "Get offer"
+--> "Set remote description"
+-->"Create Answer"
+--> "Set local description"
+--> "Send answer"
+--> ===B2=== 
+--> "Add streams"
+--> (*)
+
+@enduml

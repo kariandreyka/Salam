@@ -1,0 +1,22 @@
+@startuml ClassDiagram
+
+class Server{
+    -httpServer: HTTPServer
+    -app: Aplication
+    -io: SocketIOServer
+    -rooms: Map<string, User[]>
+    -removeUser(socket: Socket)
+    -handleSocketConnection()
+    +listen((port: number) => void)
+}
+
+Server <-- User
+
+  interface User{
+    +username: strng
+    +id: string
+  }
+
+
+
+@enduml

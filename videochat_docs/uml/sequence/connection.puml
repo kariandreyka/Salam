@@ -1,0 +1,18 @@
+@startuml Connection
+
+hide footbox
+
+Actor Offerer
+
+Offerer -> SignalServer: Send offer
+activate SignalServer
+
+Actor Responder
+
+SignalServer -> Responder: Offer
+Responder --> SignalServer: Send answer
+SignalServer --> Offerer: Answer
+
+deactivate SignalServer
+
+@enduml

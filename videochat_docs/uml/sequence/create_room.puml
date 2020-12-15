@@ -1,0 +1,31 @@
+@startuml Create room
+
+hide footbox
+
+actor User
+User -> HomePage: Create room link
+
+activate HomePage
+HomePage -> Create_room: Enter Name
+deactivate HomePage
+
+activate Create_room
+Create_room -> Store: Save state
+activate Store
+
+Store -> SignalServer: createRoom
+activate SignalServer
+SignalServer -> SignalServer: addUser
+activate SignalServer
+deactivate SignalServer
+
+SignalServer --> Store: room id
+deactivate SignalServer
+
+Store --> Create_room: Select room id
+deactivate Store
+Create_room --> User: Redirect to the room
+deactivate Create_room
+
+
+@enduml

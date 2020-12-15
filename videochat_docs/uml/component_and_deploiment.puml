@@ -1,0 +1,12 @@
+@startuml Component&Diployment
+node SignalingServer{
+  component "WebServer"{
+    [Socket API] .> ws : use
+  }
+}
+
+component "Client"{
+  [UI] .right.> ws: use
+}
+
+@enduml

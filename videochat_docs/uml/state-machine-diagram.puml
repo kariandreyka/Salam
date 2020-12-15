@@ -1,0 +1,21 @@
+@startuml State machine
+scale 600 width
+
+[*] --> Configuration : Join Room
+Configuration: # Set Name
+Configuration: # Set Room
+Configuration -right-> Joining : Request joining
+Configuration --> Cancelled : Bad input
+Joining --> Created : Succeeded / Save Result
+Joining --> Failed : Error
+state Joining {
+  state "Joining User" as join
+  [*] --> join
+  join --> join : Check Exist
+  join --> Confirm : Room Exists
+}
+Created --> [*]
+Cancelled --> [*]
+Failed --> [*]
+
+@enduml
