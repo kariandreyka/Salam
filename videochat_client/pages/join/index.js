@@ -12,7 +12,7 @@ import { useRouter } from 'next/router'
 const JoinForm = () => {
     const [name, setName] = useState('');
     const [roomInput, setRoomInput] = useState('');
-    const room = useSelector(state => state.roomId);
+    const room = useSelector(state => state.users.roomId);
     const dispatch = useDispatch();
     const router = useRouter();
 

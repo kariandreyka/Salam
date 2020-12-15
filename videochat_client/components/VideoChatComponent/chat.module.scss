@@ -1,0 +1,83 @@
+.chat_container{
+    position: relative;
+    height: calc(100vh - 80px);
+    width: 100vw;
+    padding: 20px;
+    background-color: black;
+    overflow: hidden;
+    color: white;
+
+    .remote_video,
+    .local_video{
+        max-height: 100%;
+        max-width: 100%;
+        height: 100%;
+
+        span{
+            position: absolute;
+            z-index: 101;
+            top:10px;
+            left: 10px;
+            text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+        }
+        video{
+            height: 100%;
+            display: block;
+            margin: 0px auto;
+        }
+    }
+
+    .remote_video{
+        font-weight: 400;
+        font-size: 24px;
+        line-height: 36px;
+    }
+
+    .local_video.collapse{
+        position: absolute;
+        z-index: 100;
+        bottom: 0px;
+        right: 0px;
+        margin: 0px;
+        height: 200px !important;
+
+        font-weight: 300;
+    }
+
+    .buttons{
+        position:absolute;
+        bottom: 40px;
+        left: calc(50% - 150px);
+        width: 300px;
+        display: flex;
+        justify-content: space-between;
+
+        .disabled{
+            background-color: #fff;
+            svg path{
+                fill: rgba(44, 62, 80);
+            }
+        }
+
+        a{
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(44, 62, 80, 0.7);
+            box-shadow: 4px 4px 4px rgba(0, 0, 0);
+            opacity: 0.6;
+
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+
+            &:hover{
+                opacity: 1;
+            }
+
+            &.red{
+                background-color: #e74d3c;
+            }
+        }
+    }
+}

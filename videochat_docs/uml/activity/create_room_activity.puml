@@ -1,0 +1,9 @@
+@startuml Use Case Diagram
+
+(*) --> "Send user name to server"
+--> "Generate room"
+--> "Join user"
+--> "Return room id to the client"
+--> (*)
+
+@enduml

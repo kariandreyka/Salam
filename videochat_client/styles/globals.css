@@ -12,6 +12,18 @@ a {
   text-decoration: none ;
 }
 
+button, button:focus{
+  appearance: none;
+  outline: none;
+  background: transparent;
+}
+
+button:active{
+  appearance: none;
+  outline: none;
+  background: transparent;
+}
+
 * {
   box-sizing: border-box;
 }

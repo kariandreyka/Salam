@@ -1,0 +1,23 @@
+@startuml Use Case Diagram
+
+left to right direction
+
+package ApplicationUseCases {
+    usecase commonActions as "Create room
+        __
+        Join Room
+        __
+        Follow link"
+        
+    usecase videoCall as "Video Call"
+}
+
+package Users {
+    actor User
+    User as "User"
+}
+
+User --> commonActions
+User --> videoCall
+
+@enduml

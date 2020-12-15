@@ -7,13 +7,12 @@ import throttle from 'lodash/throttle';
 
 const socketClient = new SocketClient();
 const persistedState = loadState();
-console.log(persistedState);
 const store = createStore(rootReducer, persistedState, applyMiddleware(socketMiddleware(socketClient), loggerMiddleware));
 
 store.subscribe(throttle(() =>{
     saveState({
-        user: {
-            ...store.getState().user    
+        users: {
+            user: store.getState().users.user    
         }
     })
 }, 1000))

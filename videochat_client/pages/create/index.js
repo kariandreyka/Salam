@@ -13,7 +13,7 @@ import { setUserName } from '../../actions/actions'
 const CreateForm = () => {
     const dispatch = useDispatch();
     const [name, setName] = useState('');
-    const room = useSelector((state) => state.roomId);
+    const room = useSelector((state) => state.users.roomId);
     const router = useRouter();
 
     const handleChange = (e) =>{

@@ -33,6 +33,14 @@ export class Server {
         });
     }
 
+    private removeUser(socket: Socket): void{
+        for(const key of this.rooms.keys()){   
+            this.rooms.set(key, this.rooms.get(key)?.filter(user =>{
+                return user.getUserId() !== socket.id;
+            }));
+        }
+    }
+
     private handleSocketConnection(): void{
         this.io.on('connection', (socket: Socket) =>{
             console.log('connected ', socket.id, socket.request.headers.referer );
@@ -68,20 +76,30 @@ export class Server {
                     }
                     this.rooms.get(data.roomId)?.push(new User(socket.id, data.name));
                     socket.broadcast.to(data.roomId).emit('update-user-list', data.name, socket.id); 
-                    socket.emit('update-user-list', user.getUserName(), user.getUserId());
+                    socket.emit('update-user-list', user?.getUserName(), user?.getUserId());
                     console.log(this.rooms);
                     cb(data.roomId);
                 }
             })
 
+            socket.on('make-offer', (data) =>{
+                socket.to(data.roomId).emit('offer-made', {
+                    data: data.offer,
+                    socketId: socket.id
+                }); 
+            });
+
+            socket.on('make-answer', (data) =>{
+                socket.to(data.socketId).emit('answer-made', {
+                    data: data.answer,
+                    socketId: socket.id
+                })
+            })
+
             socket.on('disconnect', () =>{
                 console.log('disconnect', socket.id);
 
-                for(const key of this.rooms.keys()){   
-                    this.rooms.set(key, this.rooms.get(key)?.filter(user =>{
-                        return user.getUserId() !== socket.id;
-                    }));
-                }
+                this.removeUser(socket);
 
                 console.log(this.rooms);
 
@@ -103,6 +121,12 @@ export class Server {
                     answer: data.answer
                 });
             });
+
+            socket.on('leave', (roomId: string) =>{
+                socket.leave(roomId);
+                this.removeUser(socket);
+                console.log(this.rooms);
+            })
         });
     }
 

@@ -1,4 +1,5 @@
 import { setOtherUser } from './actions';
+import { setAnswer } from './session'
 import store from '../store';
 
 export const connect = () =>{
@@ -36,6 +37,7 @@ export const updateUserList = () =>{
 }
 
 export const makeOffer = (data) =>{
+    console.log(data);
     return {
         promise: (socket) => socket.emit('make-offer', data),
         type: 'socket',
@@ -44,6 +46,7 @@ export const makeOffer = (data) =>{
 }
 
 export const makeAnswer = (data) =>{
+    console.log(data);
     return {
         promise: (socket) => socket.emit('make-answer', data),
         type: 'socket',
@@ -51,21 +54,34 @@ export const makeAnswer = (data) =>{
     }
 }
 
-export const offerMade = (fun) =>{
+export const offerMade = () =>{
     return {
-        promise: (socket) => socket.on('offer-made', fun),
+        promise: (socket) => socket.on('offer-made', (data) =>{
+            store.dispatch(setAnswer(data));
+        }),
         type: 'socket',
         types: ['REQUEST', 'SUCCESS', 'FAILURE']
     }
 }
 
-export const answerMade = (fun) =>{
+export const leave = (roomId) =>{
     return {
-        promise: (socket) => socket.on('answer-made', fun),
+        promise: socket => socket.emit('leave', roomId),
         type: 'socket',
         types: ['REQUEST', 'SUCCESS', 'FAILURE']
     }
 }
+export const answerMade = () =>{
+    return {
+        promise: (socket) => socket.on('answer-made', data =>{
+            store.dispatch(setAnswer(data));
+        }),
+        type: 'socket',
+        types: ['REQUEST', 'SUCCESS', 'FAILURE']
+    }
+}
+
+
 
 // export const addUser = (fun) =>{
 //     return {
@@ -74,6 +90,7 @@ export const answerMade = (fun) =>{
 //         types: ['REQUEST', 'SUCCESS', 'FAILURE']
 //     }
 // }
+
 
 export const removeUser = (fun) =>{
     return {
