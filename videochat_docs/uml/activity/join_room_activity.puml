@@ -1,0 +1,8 @@
+@startuml Use Case Diagram
+
+(*) --> "Send room id and user name to server"
+--> "Join room"
+--> "Redirect to room link"
+--> (*)
+
+@enduml
