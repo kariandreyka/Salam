@@ -3,7 +3,7 @@
 ### 1. Application use cases
 The **Use Cases Diagram** is the following diagram:
 
-![alternative text](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/kariandreyka/Salamsequence/master/videochat_docs/uml/use-cases.puml)
+![alternative text](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/kariandreyka/Salam/master/videochat_docs/uml/use-cases.puml)
 
 ### 2. Activity Diagrams
 #### 2.1. Create room
@@ -41,7 +41,7 @@ The **Use Cases Diagram** is the following diagram:
 ### 6. Component & Deployment Diagrams
 #### 6.1.
 
-![alternative text](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/kariandreyka/Salam/master/videochat_videochat_docs/uml/component_and_deploiment.puml)
+![alternative text](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/kariandreyka/Salam/master/videochat_docs/uml/component_and_deploiment.puml)
 
 
 
