@@ -1,7 +1,8 @@
 @startuml Use Case Diagram
 
-(*) --> "Send room id and user name to server"
---> "Join room"
+(*) --> "Send user name to server"
+--> "Create room"
+--> "Return room id"
 --> "Redirect to room link"
 --> (*)
 
